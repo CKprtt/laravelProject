@@ -12,3 +12,4 @@ class ArtistProfile extends Model {
     public function user() { return $this->belongsTo(User::class,'users_id'); }
     public function eventRequests() { return $this->hasMany(EventRequest::class,'artist_id'); }
 }
+ดกกด
