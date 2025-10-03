@@ -9,9 +9,9 @@ class EventRequest extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'event_requests'; 
     protected $primaryKey = 'event_requests_id';
 
-    // ✅ กำหนด field ที่ให้ assign ได้
     protected $fillable = [
         'event_name',
         'proposal',
@@ -19,17 +19,20 @@ class EventRequest extends Model
         'end_date',
         'event_status',
         'poster_path',
+        'type_hall',
         'artist_id',
         'events_id',
     ];
 
+    // ความสัมพันธ์กับศิลปิน
     public function artist()
     {
-        return $this->belongsTo(ArtistProfile::class,'artist_id');
+        return $this->belongsTo(ArtistProfile::class, 'artist_id', 'artist_id');
     }
 
+    // ความสัมพันธ์กับอีเวนต์
     public function event()
     {
-        return $this->belongsTo(Event::class,'events_id');
+        return $this->belongsTo(Event::class, 'events_id', 'events_id');
     }
 }
