@@ -24,6 +24,9 @@ Route::post('/artist/request/store', [EventRequestController::class, 'store'])->
 Route::get('/artist/requests', [EventRequestController::class, 'myRequests'])->name('artist.requests');
 Route::delete('/artist/requests/{id}', [EventRequestController::class, 'destroy'])->name('artist.requests.destroy');
 
+use App\Http\Controllers\SouvenirController;
+Route::get('/artist/souvenir/request', [SouvenirController::class, 's_create'])->name('artist.s_create');
+
 // Admin
 Route::get('/admin/requests', [EventRequestController::class, 'index'])->name('admin.requests');
 Route::post('/admin/requests/{id}/approve', [EventRequestController::class, 'approve'])->name('admin.requests.approve');
