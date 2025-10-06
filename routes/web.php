@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,21 +27,32 @@ Route::middleware([
     })->name('dashboard');
 });
 
-use App\Http\Controllers\EventRequestController;
 
-// Artist
-Route::get('/artist/request/create', [EventRequestController::class, 'create'])->name('artist.createRequest');
-Route::post('/artist/request/store', [EventRequestController::class, 'store'])->name('artist.storeRequest');
-Route::get('/artist/requests', [EventRequestController::class, 'myRequests'])->name('artist.requests');
-Route::delete('/artist/requests/{id}', [EventRequestController::class, 'destroy'])->name('artist.requests.destroy');
+use App\Http\Controllers\EventPublicController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SouvenirOrderController;
 
-use App\Http\Controllers\SouvenirController;
-Route::get('/artist/souvenir/request', [SouvenirController::class, 's_create'])->name('artist.s_create');
 
-// Admin
-Route::get('/admin/requests', [EventRequestController::class, 'index'])->name('admin.requests');
-Route::post('/admin/requests/{id}/approve', [EventRequestController::class, 'approve'])->name('admin.requests.approve');
-Route::post('/admin/requests/{id}/reject', [EventRequestController::class, 'reject'])->name('admin.requests.reject');
+// รายการอีเวนต์ (อนุมัติแล้ว — ในที่นี้ถือว่าอยู่ในตาราง events แล้ว)
+Route::get('/events', [EventPublicController::class,'index'])->name('home');
+Route::get('/events/{id}', [EventPublicController::class,'show'])->name('events.show');
 
+// ต้องล็อกอินก่อนจอง
+Route::middleware(['auth','verified'])->group(function () {
+    // จองตั๋ว
+    Route::post('/events/{id}/book', [BookingController::class,'store'])->name('bookings.store');
+
+    // การจองของฉัน
+    Route::get('/my-bookings', [BookingController::class,'index'])->name('bookings.index');
+    Route::post('/bookings/{id}/update-zone', [BookingController::class,'updateZone'])->name('bookings.update_zone');
+    Route::post('/bookings/{id}/cancel', [BookingController::class,'cancel'])->name('bookings.cancel');
+
+    // จองของที่ระลึก 
+    //Route::get('/my-souvenirs', [SouvenirOrderController::class, 'index'])->name('souvenir_orders.index');
+    //Route::post('/souvenirs/{id}/order', [SouvenirOrderController::class, 'store'])->name('souvenir_orders.store');
+    //Route::post('/souvenir-orders/{id}/update-item', [SouvenirOrderController::class, 'updateItem'])->name('souvenir_orders.update_item');
+    //Route::post('/souvenir-orders/{id}/cancel', [SouvenirOrderController::class, 'cancel'])->name('souvenir_orders.cancel');
+
+});
 
 
