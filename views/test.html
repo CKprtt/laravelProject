@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            border-radius: ;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+</head>
+<body>
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/dashboard/admin">Admin Dashboard</a></li> 
+    </ul>   
+
+    <select>
+        <option value="all">All</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </select>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Management Account</h1>
+
+    <form method="GET" action="{{ route('ManageAccount') }}">
+        <label for="usertype">Filter by User Type:</label>
+        <select name="usertype" id="usertype" onchange="this.form.submit()">
+            <option value="">All</option>
+            <option value="user" {{ request('usertype') == 'user' ? 'selected' : '' }}>User</option>
+            <option value="artist" {{ request('usertype') == 'artist' ? 'selected' : '' }}>Artist</option>
+            <option value="admin" {{ request('usertype') == 'admin' ? 'selected' : '' }}>Admin</option>
+            <option value="super_admin" {{ request('usertype') == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+        </select>
+    </form>
+    
+    @if(isset($user_edit))
+        <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>User Type</th>
+            <th>Action</th>
+        </tr>
+        @foreach($user as $i)
+        <tr>
+            <form method="POST" action="{{ route('Manage.update', $user_edit->id) }}">
+                @csrf
+                @method('PUT')
+                <td>{{ $i->id }}</td>
+                <td>
+                    <input type="text" name="name" value="{{ $i->name }}">
+                </td>
+                <td>
+                    <input type="email" name="email" value="{{ $i->email }}">
+                </td>
+                <td>
+                    <select name="usertype">
+                        <option value="user" {{ $i->usertype == 'user' ? 'selected' : '' }}>User</option>
+                        <option value="artist" {{ $i->usertype == 'artist' ? 'selected' : '' }}>Artist</option>
+                        <option value="admin" {{ $i->usertype == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="super_admin" {{ $i->usertype == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit">Update</button>
+                </td>
+            </form>
+        </tr>
+        @endforeach
+        </table>
+    @else
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>User Type</th>
+                <th>Created Time</th>
+                <th>Updated Time</th>
+                <th>Action</th>
+
+            </tr>
+            @foreach($user as $i)
+            <tr>
+                <td>{{ $i->id }}</td>
+                <td>{{ $i->name }}</td>
+                <td>{{ $i->email }}</td>
+                <td>{{ $i->usertype}}</td>
+                <td>{{ $i->created_at}}</td>
+                <td>{{ $i->updated_at}}</td>
+        
+                <td>
+                    <a href="{{ route('Manage.edit', ['id' => $i->id]) }}">Edit</a> | <a>Delete</a>
+                </td>
+            </tr>
+            @endforeach
+    </table>
+    @endif
+</body>
+</html>
