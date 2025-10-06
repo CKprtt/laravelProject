@@ -1,0 +1,242 @@
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #EBE6E0;
+    margin: 0;
+    padding: 0;
+}
+
+/* ส่วน Header */
+header {
+    background-color: #A88E7A;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    height: 80px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 28px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* เมนูหลัก */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.nav a:hover {
+    background-color: #E8D9C2;
+    color: #4B3F36;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #F8F3EF;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.dropdown .menu a {
+    display: block;
+    color: #4B3F36;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown .menu a:hover {
+    background-color: #E8D9C2;
+}
+
+/* แสดงเมนูเมื่อ hover */
+.dropdown:hover .menu {
+    display: block;
+}
+
+.logout {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Kanit', sans-serif;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* เมื่อเอาเมาส์ชี้ */
+.logout:hover {
+    background-color: #E8D9C2;
+    color: #4B3F36;
+}
+
+.booking-tabs {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+    gap: 20px;
+}
+
+.booking-tabs .tab {
+    flex: 1;
+    max-width: 500px;
+    text-align: center;
+    padding: 14px 0;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.booking-tabs .tab:first-child {
+    background: #fff;
+    border: 2px solid #d9bca5;
+    color: #000;
+}
+
+.booking-tabs .tab:last-child {
+    background: #a38674;
+    color: #fff;
+}
+
+.booking-tabs .tab.active {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.poster {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #ddd;
+    overflow: hidden;
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.meta {
+    font-size: 14px;
+    color: #666;
+}
+
+.btn {
+    align-self: flex-start;
+    margin-top: 10px;
+    background-color: #f2e2cc;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #e0c9a6;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e0c9a6;
+    color: #222;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 40px;
+}
+
+.form-select,
+.form-btn {
+    width: 100%;
+    padding: 8px 265px;
+    font-size: 14px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-btn {
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
