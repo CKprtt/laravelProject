@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EventRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ArtistProfile;
+use App\Models\Event;
 
 class EventRequestController extends Controller
 {
+
+
     // อันนี้ของ Artist 
 
     // หน้า คำร้องของจัดงาน
@@ -34,6 +39,12 @@ class EventRequestController extends Controller
             'type_hall'  => 'required|in:Yes,No',
         ]);
 
+        $artist = ArtistProfile::where('users_id', Auth::id())->first();
+
+        if (!$artist) {
+            return redirect()->back()->with('error', 'ไม่พบโปรไฟล์ศิลปินของคุณ');
+        }
+
         // อัปโหลดรูป
         $posterUrl = null;
         if ($request->hasFile('poster')) {
@@ -50,7 +61,7 @@ class EventRequestController extends Controller
             'poster_path'  => $posterUrl,
             'type_hall'    => $request->type_hall,
             'event_status' => 'pending',
-            'artist_id'    => 1 // ตัวอย่างทดสอบ
+            'artist_id'    => $artist->artist_id,
         ]);
 
         return redirect()->route('artist.my')->with('success', 'ส่งคำร้องเรียบร้อยแล้ว');
@@ -119,7 +130,17 @@ class EventRequestController extends Controller
     {
         $req = EventRequest::findOrFail($id);
         $req->update(['event_status' => 'approved']);
-        return redirect()->back()->with('success');
+
+        Event::create([
+            'events_name' => $req->event_name,
+            'description' => $req->proposal,
+            'poster_path' => $req->poster_path,
+            'start_date'  => $req->start_date,
+            'end_date'    => $req->end_date,
+            'type_hall'   => $req->type_hall,
+        ]);
+
+        return redirect()->back()->with('success', 'อนุมัติคำร้องเรียบร้อยแล้ว และเพิ่มในหน้า Home แล้ว');
     }
 
     // ปฏิเสธ
