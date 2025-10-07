@@ -70,11 +70,11 @@
 <body>
 
     <header>
-        <h1>Welcome Admin!</h1>
+        <h3>Welcome Admin!</h3>
 <nav>
             <ul class="nav align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url('#') }}">Home</a>
+                    <a class="nav-link text-white" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="requestDropdown" role="button"
@@ -89,10 +89,16 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url('#') }}">Zone</a>
+                    <a class="nav-link text-white" href="{{ route('bookings.indexBooking') }}">Zone</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url('#') }}">Profile</a>
+                    <a class="nav-link text-white" href="{{ url('/dashboard/profile') }}">Profile</a>
+                    <from method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link text-white"
+                            style="padding: 0; border: none; background: none; cursor: pointer;">
+                            Logout
+                        </button>
                 </li>
             </ul>
         </nav>
